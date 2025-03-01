@@ -1,0 +1,120 @@
+<div class="calculator-container">
+  <div class="calculator-card card">
+    <h1 class="calculator-title">Relativistic time calculator</h1>
+    <div class="users-container">
+      <!-- Usuario izquierdo -->
+      <div class="user-section">
+        <div class="user-avatar" (click)="changeIcon(1)">
+          <span class="material-icons">{{selectedIcon1}}</span>
+        </div>
+        <div class="input-group">
+          <div class="input-content">
+            <label for="v1">Velocidad de la primera persona</label>
+            <input
+              id="v1"
+              type="number"
+              class="input-field"
+              [(ngModel)]="v1"
+              (keypress)="onlyNumbers($event)"
+              placeholder="Velocidad">
+            <span class="input-hint">En Km/h</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección central -->
+      <div class="center-section">
+        <div class="time-input">
+          <div class="input-content">
+            <div class="label-with-info">
+              <label for="time">Tiempo medido de referencia</label>
+              <span class="info-icon material-icons"
+                    matTooltip="Es el tiempo medido desde el reposo. Por ejemplo, lo que midió el reloj de tu celular durante el recorrido"
+                    matTooltipPosition="right">
+                info
+              </span>
+            </div>
+            <div class="time-input-group">
+              <input
+                id="time"
+                type="number"
+                class="input-field"
+                [(ngModel)]="time"
+                (keypress)="onlyNumbers($event)"
+                placeholder="Tiempo">
+              <div class="time-unit-toggle">
+                <button
+                  [class.active]="timeUnit === 'hours'"
+                  (click)="timeUnit = 'hours'">h</button>
+                <button
+                  [class.active]="timeUnit === 'minutes'"
+                  (click)="timeUnit = 'minutes'">min</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-go" (click)="calculateTime()">
+          GO
+        </button>
+      </div>
+
+      <!-- Usuario derecho -->
+      <div class="user-section">
+        <div class="user-avatar" (click)="changeIcon(2)">
+          <span class="material-icons">{{selectedIcon2}}</span>
+        </div>
+        <div class="input-group">
+          <div class="input-content">
+            <label for="v2">Velocidad de la segunda persona</label>
+            <input
+              id="v2"
+              type="number"
+              class="input-field"
+              [(ngModel)]="v2"
+              (keypress)="onlyNumbers($event)"
+              placeholder="Velocidad">
+            <span class="input-hint">En Km/h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-container" *ngIf="comparisonResult">
+      <h3>Resultados:</h3>
+      <div class="result-grid">
+        <div class="result-item" [ngClass]="getTimeComparisonClass(1)">
+          <label>Tiempo 1:</label>
+          <p>{{comparisonResult.t_1 | number:'1.15-15'}} ms</p>
+        </div>
+        <div class="result-item" [ngClass]="getTimeComparisonClass(2)">
+          <label>Tiempo 2:</label>
+          <p>{{comparisonResult.t_2 | number:'1.15-15'}} ms</p>
+        </div>
+        <div class="result-item">
+          <label>Diferencia:</label>
+          <p>{{comparisonResult.delta_t | number:'1.15-15'}} ms</p>
+        </div>
+      </div>
+
+      <div class="interpretation" *ngIf="comparisonResult.t_1 !== comparisonResult.t_2">
+        <p>Esto quiere decir que el observador {{getSlowerObserver()}} experimentó más tiempo
+        que el observador {{getFasterObserver()}} durante este recorrido, envejeciendo más en el proceso.</p>
+      </div>
+    </div>
+
+    <div class="error-container" *ngIf="errorMessage">
+      <p class="error-text">{{errorMessage}}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de selección de icono -->
+<div class="icon-selector-modal" *ngIf="showIconSelector" (click)="closeIconSelector()">
+  <div class="icon-selector-content" (click)="$event.stopPropagation()">
+    <div class="icon-grid">
+      <div class="icon-option" *ngFor="let icon of availableIcons" (click)="selectIcon(icon)">
+        <span class="material-icons">{{icon}}</span>
+      </div>
+    </div>
+  </div>
+</div>
