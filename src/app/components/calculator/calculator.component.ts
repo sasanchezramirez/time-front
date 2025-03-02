@@ -32,20 +32,22 @@ export class CalculatorComponent {
   constructor(private timeService: TimeService) {}
 
   onlyNumbers(event: KeyboardEvent): boolean {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    const key = event.key;
 
-    if (event.key === 'Backspace' || event.key === 'Delete' ||
-        event.key === 'ArrowLeft' || event.key === 'ArrowRight' ||
-        event.key === 'Tab') {
+    // Permitir el 0 solo si es el único dígito o si no está al inicio
+    if (key === '0') {
+      return value === '' || value !== '0';
+    }
+
+    // Permitir números del 1-9 siempre
+    if (/[1-9]/.test(key)) {
       return true;
     }
 
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-      return false;
-    }
-    return true;
+    // Bloquear cualquier otro carácter
+    return false;
   }
 
   calculateTime() {
@@ -81,7 +83,8 @@ export class CalculatorComponent {
   }
 
   validateInputs(): boolean {
-    return this.v1 > 0 && this.v2 > 0 && this.time > 0;
+    // Permitir que v1 y v2 sean 0 o números positivos
+    return (this.v1 >= 0 && this.v2 >= 0 && this.time > 0);
   }
 
   changeIcon(userNumber: number) {

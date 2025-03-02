@@ -1,0 +1,31 @@
+// Heredamos los estilos base del login
+@import '../login/login.component.scss';
+
+.auth-card {
+  .form-group {
+    position: relative;
+
+    &:last-of-type {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    // Estilo específico para el campo de confirmación de contraseña
+    input[type="password"]#confirmPassword {
+      border-color: var(--border-color);
+
+      &.mismatch {
+        border-color: var(--error-color, #f44336);
+
+        & + .error-message {
+          display: block;
+          color: var(--error-color, #f44336);
+          font-size: 0.875rem;
+          margin-top: var(--spacing-xs);
+        }
+      }
+    }
+  }
+
+  // Añadir un poco más de espacio para el formulario más largo
+  max-width: 450px;
+}
