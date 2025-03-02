@@ -7,7 +7,7 @@ import { TimeComparisonRequest, TimeComparisonData, ApiResponse } from '../model
   providedIn: 'root'
 })
 export class TimeService {
-  private apiUrl = 'http://127.0.0.1:8000/time/time-comparision';  // Cambiar por la URL real del backend
+  private apiUrl = 'https://relativistic-time-calculator.onrender.com/time/time-comparision';  // Cambiar por la URL real del backend
 
   constructor(private http: HttpClient) {}
 
