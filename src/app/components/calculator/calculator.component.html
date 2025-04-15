@@ -1,83 +1,43 @@
-<div class="calculator-container">
-  <div class="calculator-card card">
-    <h1 class="calculator-title">Relativistic time calculator</h1>
-    <div class="users-container">
-      <!-- Usuario izquierdo -->
-      <div class="user-section">
-        <div class="user-avatar" (click)="changeIcon(1)">
-          <span class="material-icons">{{selectedIcon1}}</span>
-        </div>
-        <div class="input-group">
-          <div class="input-content">
-            <label for="v1">Velocidad de la primera persona</label>
-            <input
-              id="v1"
-              type="number"
-              class="input-field"
-              [(ngModel)]="v1"
-              (keypress)="onlyNumbers($event)"
-              placeholder="Velocidad">
-            <span class="input-hint">En Km/h</span>
-          </div>
-        </div>
-      </div>
+<div class="container">
+  <div class="logo-container">
+    <img src="assets/logo.svg" alt="Time Calculator Logo" class="logo">
+  </div>
+  <h1 class="title">Time Calculator</h1>
 
-      <!-- Sección central -->
-      <div class="center-section">
-        <div class="time-input">
-          <div class="input-content">
-            <div class="label-with-info">
-              <label for="time">Tiempo medido de referencia</label>
-              <span class="info-icon material-icons"
-                    matTooltip="Es el tiempo medido desde el reposo. Por ejemplo, lo que midió el reloj de tu celular durante el recorrido"
-                    matTooltipPosition="right">
-                info
-              </span>
-            </div>
-            <div class="time-input-group">
-              <input
-                id="time"
-                type="number"
-                class="input-field"
-                [(ngModel)]="time"
-                (keypress)="onlyNumbers($event)"
-                placeholder="Tiempo">
-              <div class="time-unit-toggle">
-                <button
-                  [class.active]="timeUnit === 'hours'"
-                  (click)="timeUnit = 'hours'">h</button>
-                <button
-                  [class.active]="timeUnit === 'minutes'"
-                  (click)="timeUnit = 'minutes'">min</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-go" (click)="calculateTime()">
-          GO
-        </button>
-      </div>
-
-      <!-- Usuario derecho -->
-      <div class="user-section">
-        <div class="user-avatar" (click)="changeIcon(2)">
-          <span class="material-icons">{{selectedIcon2}}</span>
-        </div>
-        <div class="input-group">
-          <div class="input-content">
-            <label for="v2">Velocidad de la segunda persona</label>
-            <input
-              id="v2"
-              type="number"
-              class="input-field"
-              [(ngModel)]="v2"
-              (keypress)="onlyNumbers($event)"
-              placeholder="Velocidad">
-            <span class="input-hint">En Km/h</span>
-          </div>
-        </div>
+  <div class="calculator">
+    <div class="person-container">
+      <div class="avatar">1</div>
+      <div class="input-group">
+        <div class="label">Velocidad de la primera persona</div>
+        <input type="number" class="input-field" placeholder="0" [(ngModel)]="v1" (keypress)="onlyNumbers($event)">
+        <div class="unit">En Km/h</div>
       </div>
     </div>
+
+
+    <div class="person-container">
+      <div class="avatar">2</div>
+      <div class="input-group">
+        <div class="label">Velocidad de la segunda persona</div>
+        <input type="number" class="input-field" placeholder="0" [(ngModel)]="v2" (keypress)="onlyNumbers($event)">
+        <div class="unit">En Km/h</div>
+      </div>
+    </div>
+
+    <div class="reference-time">
+      <div class="label">
+        Tiempo medido de referencia
+        <span class="info-icon" matTooltip="Es el tiempo medido desde el reposo. Por ejemplo, lo que midió el reloj de tu celular durante el recorrido">i</span>
+      </div>
+      <input type="number" class="input-field" placeholder="0" [(ngModel)]="time" (keypress)="onlyNumbers($event)">
+      <div class="time-selector">
+        <div class="time-unit" [class.active]="timeUnit === 'hours'" (click)="timeUnit = 'hours'">h</div>
+        <div class="time-unit" [class.active]="timeUnit === 'minutes'" (click)="timeUnit = 'minutes'">min</div>
+      </div>
+    </div>
+
+    <button class="action-button" (click)="calculateTime()">GO</button>
+
 
     <div class="result-container" *ngIf="comparisonResult">
       <h3>Resultados:</h3>
